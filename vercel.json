@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd web && bun install && bun run build",
+  "buildCommand": "bun install && bun run build",
   "outputDirectory": "web/out",
-  "devCommand": "cd web && bun run dev",
-  "installCommand": "cd web && bun install"
+  "devCommand": "bun run dev",
+  "installCommand": "bun install"
 }
