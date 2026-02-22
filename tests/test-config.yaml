@@ -1,0 +1,117 @@
+# animex Test Configuration
+# This file defines which tests to run and their parameters
+
+# Test suite configuration
+test_suite:
+  name: "animex Test Suite"
+  version: "1.0.0"
+  parallel: false  # Run tests sequentially for now
+  stop_on_failure: false  # Continue running tests even if one fails
+
+# Test categories
+categories:
+  unit:
+    enabled: true
+    description: "Unit tests for individual functions"
+    tests:
+      - validation
+      - quality_selection
+      - config_parser
+  
+  integration:
+    enabled: true
+    description: "Integration tests for feature workflows"
+    tests:
+      - config_file
+      - mode_switching
+      - search_functionality
+  
+  smoke:
+    enabled: true
+    description: "Smoke tests for basic functionality"
+    tests:
+      - help_display
+      - version_display
+      - dependency_check
+
+# Environment configuration
+environment:
+  # Temporary directory for test artifacts
+  test_dir: "/tmp/animex-tests"
+  
+  # Test history directory
+  hist_dir: "/tmp/animex-tests/history"
+  
+  # Clean up after tests
+  cleanup: true
+  
+  # Verbose output
+  verbose: false
+
+# Test-specific configuration
+test_config:
+  # Validation tests
+  validation:
+    episode_numbers:
+      valid: ["1", "5", "10", "1-12", "5 6 7", "1-5 8-10"]
+      invalid: ["abc", "-1", "1.5", "a-b", ""]
+    
+    anime_ids:
+      valid: ["abc123", "show-id-456", "anime_789"]
+      invalid: ["", "   "]
+  
+  # Quality selection tests
+  quality:
+    valid_values: ["best", "worst", "360", "480", "720", "1080", "interactive"]
+    invalid_values: ["medium", "high", "1440", "2k", "4k"]
+  
+  # Config file tests
+  config:
+    test_values:
+      default_mode: "dub"
+      default_quality: "720"
+      default_player: "vlc"
+      download_dir: "/tmp/downloads"
+      skip_intro: "1"
+  
+  # Mode switching tests
+  mode:
+    modes: ["sub", "dub"]
+    
+# Expected behavior
+expectations:
+  # CLI flags should work
+  cli_flags:
+    - flag: "-h"
+      should_exit: 0
+      should_contain: "Usage"
+    
+    - flag: "--help"
+      should_exit: 0
+      should_contain: "Options"
+    
+    - flag: "-V"
+      should_exit: 0
+      should_match: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    
+    - flag: "--version"
+      should_exit: 0
+      should_match: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+  
+  # Config file should be created
+  config_file:
+    location: "${hist_dir}/config"
+    should_create: true
+    should_contain:
+      - "default_mode"
+      - "default_quality"
+      - "default_player"
+
+# Reporting
+reporting:
+  format: "text"  # text, json, or both
+  output_file: "test-results.txt"
+  show_passed: true
+  show_failed: true
+  show_skipped: true
+  summary: true

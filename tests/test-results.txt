@@ -1,0 +1,205 @@
+ani-cli Test Results
+Generated: Monday 23 February 2026 03:35:37 AM IST
+
+
+=== Smoke Tests ===
+
+[1;33mRunning Smoke Tests[0m
+
+[0;32m✓[0m ani-cli script exists
+[0;32m✓[0m ani-cli script is executable
+[0;32m✓[0m Help flag (-h) exits successfully
+[0;32m✓[0m Help shows usage
+[0;32m✓[0m Help flag (--help) exits successfully
+[0;32m✓[0m Help shows usage
+[0;32m✓[0m Version flag (-V) exits successfully
+[0;32m✓[0m Version shows version number
+[0;32m✓[0m Version flag (--version) exits successfully
+[0;32m✓[0m Version shows version number
+[0;32m✓[0m Help shows -q option
+[0;32m✓[0m Help shows -d option
+[0;32m✓[0m Help shows -c option
+[0;32m✓[0m Help shows --dub option
+[0;32m✓[0m Help shows --config option
+[0;32m✓[0m Invalid flag exits with error
+[0;32m✓[0m Script has correct shebang
+[0;32m✓[0m Script has create_default_config function
+[0;32m✓[0m Script has validate_episode_number function
+[0;32m✓[0m Script has validate_anime_id function
+[0;32m✓[0m Script has select_quality function
+[0;32m✓[0m Script has version variable
+[0;32m✓[0m Script contains updated repository URL
+[0;32m✓[0m Script does not contain old repository URL
+[0;32m✓[0m Help mentions config file
+[0;32m✓[0m Help mentions quality flag
+[0;32m✓[0m Help mentions dub flag
+[0;32m✓[0m Script has valid shell syntax
+[0;32m✓[0m Script appears POSIX compliant (basic check)
+
+[1;33m========================================[0m
+[0;32mPassed: 29[0m
+[0;31mFailed: 0[0m
+[1;33mTotal:  29[0m
+[1;33m========================================[0m
+
+=== Validation Tests ===
+[1;33m╔════════════════════════════════════════╗[0m
+[1;33m║  Unit Tests: Validation Functions     ║[0m
+[1;33m╔════════════════════════════════════════╗[0m
+
+[1;33m=== Testing valid episode numbers ===[0m
+[0;32m✓[0m PASS: Single episode: 1
+[0;32m✓[0m PASS: Single episode: 5
+[0;32m✓[0m PASS: Single episode: 100
+[0;32m✓[0m PASS: Episode range: 1-12
+[0;32m✓[0m PASS: Episode range: 5-10
+[0;32m✓[0m PASS: Multiple episodes: 1 2 3
+[0;32m✓[0m PASS: Multiple episodes: 5 6 7
+[0;32m✓[0m PASS: Mixed: 1-5 8-10
+
+[1;33m=== Testing invalid episode numbers ===[0m
+[0;32m✓[0m PASS: Empty string
+[0;32m✓[0m PASS: Letters: abc
+[0;32m✓[0m PASS: Decimal: 1.5
+[0;32m✓[0m PASS: Letter range: a-b
+[0;32m✓[0m PASS: Special chars: 1@2
+[0;32m✓[0m PASS: Mixed: 1abc
+
+[1;33m=== Testing valid anime IDs ===[0m
+[0;32m✓[0m PASS: Alphanumeric: abc123
+[0;32m✓[0m PASS: With dashes: show-id-456
+[0;32m✓[0m PASS: With underscores: anime_789
+[0;32m✓[0m PASS: Long ID: very-long-anime-id-123456
+[0;32m✓[0m PASS: Numbers only: 12345
+[0;32m✓[0m PASS: Letters only: abcdef
+
+[1;33m=== Testing invalid anime IDs ===[0m
+[0;32m✓[0m PASS: Empty string
+[0;32m✓[0m PASS: Spaces are non-empty: '   '
+
+[1;33m═══════════════════════════════════════[0m
+Total Tests: 22
+[0;32mPassed: 22[0m
+[0;31mFailed: 0[0m
+[1;33m═══════════════════════════════════════[0m
+
+=== Quality Selection Tests ===
+
+[1;33mRunning Quality Selection Tests[0m
+
+[0;32m✓[0m Quality 'best' selects highest
+[0;32m✓[0m Quality 'worst' selects lowest
+[0;32m✓[0m Quality '1080' selects 1080p
+[0;32m✓[0m Quality '720' selects 720p
+[0;32m✓[0m Quality '480' selects 480p
+[0;32m✓[0m Quality '360' selects 360p
+[0;32m✓[0m Invalid quality returns error code
+[0;32m✓[0m Invalid quality shows error message
+[0;32m✓[0m Quality 'best' is valid
+[0;32m✓[0m Quality 'worst' is valid
+[0;32m✓[0m Quality '360' is valid
+[0;32m✓[0m Quality '480' is valid
+[0;32m✓[0m Quality '720' is valid
+[0;32m✓[0m Quality '1080' is valid
+[0;32m✓[0m Quality 'interactive' is valid
+[0;32m✓[0m Quality '2160' is invalid
+[0;32m✓[0m Quality '4k' is invalid
+[0;32m✓[0m Quality 'ultra' is invalid
+[0;32m✓[0m Quality 'high' is invalid
+[0;32m✓[0m Quality 'low' is invalid
+[0;32m✓[0m Quality 'medium' is invalid
+[0;32m✓[0m Quality '540' is invalid
+[0;32m✓[0m Parse -q flag
+[0;32m✓[0m Parse --quality= flag
+[0;32m✓[0m Interactive mode recognized
+[0;32m✓[0m Default quality is 'best'
+[0;32m✓[0m Quality from env var
+[0;32m✓[0m CLI quality overrides ENV
+[0;32m✓[0m Parse available qualities
+[0;32m✓[0m Empty links returns empty
+
+[1;33m========================================[0m
+[0;32mPassed: 30[0m
+[0;31mFailed: 0[0m
+[1;33mTotal:  30[0m
+[1;33m========================================[0m
+
+=== Mode (Dub/Sub) Tests ===
+
+[1;33mRunning Mode (Dub/Sub) Tests[0m
+
+[0;32m✓[0m Default mode is 'sub'
+[0;32m✓[0m Mode set to 'dub'
+[0;32m✓[0m Mode 'sub' is valid
+[0;32m✓[0m Mode 'dub' is valid
+[0;32m✓[0m Mode 'raw' is invalid
+[0;32m✓[0m Mode 'english' is invalid
+[0;32m✓[0m Mode 'japanese' is invalid
+[0;32m✓[0m Mode 'dubbed' is invalid
+[0;32m✓[0m Mode 'subbed' is invalid
+[0;32m✓[0m Mode from --dub flag
+[0;32m✓[0m Mode from env var
+[0;32m✓[0m CLI mode overrides ENV
+[0;32m✓[0m ENV mode overrides default
+[0;32m✓[0m Mode toggles from sub to dub
+[0;32m✓[0m Mode toggles from dub to sub
+[0;32m✓[0m Mode display shows [SUB]
+[0;32m✓[0m Mode display shows [DUB]
+[0;32m✓[0m Search shows sub count only
+[0;32m✓[0m Search shows both counts
+[0;32m✓[0m Search shows different counts
+[0;32m✓[0m API query contains sub mode
+[0;32m✓[0m API query contains dub mode
+[0;32m✓[0m Mode converts to lowercase
+[0;32m✓[0m Mode persists across episodes
+[0;32m✓[0m Toggle mode command recognized
+
+[1;33m========================================[0m
+[0;32mPassed: 25[0m
+[0;31mFailed: 0[0m
+[1;33mTotal:  25[0m
+[1;33m========================================[0m
+
+=== Config File Tests ===
+
+[1;33mRunning Config File Tests[0m
+
+[0;32m✓[0m Config file created
+[0;32m✓[0m Config contains default_mode
+[0;32m✓[0m Config contains default_quality
+[0;32m✓[0m Config contains download_dir
+[0;32m✓[0m Config loads default_mode
+[0;32m✓[0m Config loads default_quality
+[0;32m✓[0m Config loads default_player
+[0;32m✓[0m Config loads download_dir
+[0;32m✓[0m Config loads skip_intro
+[0;32m✓[0m Config loads use_external_menu
+[0;32m✓[0m Config loads exit_after_play
+[0;32m✓[0m Config parses mode with comments
+[0;32m✓[0m Config parses quality with inline comment
+[0;32m✓[0m Config parses player with indented comment
+[0;32m✓[0m Config loads invalid mode
+[0;32m✓[0m Config loads invalid quality
+[0;32m✓[0m Config loads nonexistent player
+[0;32m✓[0m Empty config file exists
+[0;32m✓[0m Empty config sources without error
+[0;32m✓[0m Partial config loads mode
+[0;32m✓[0m Partial config loads quality
+[0;32m✓[0m Config file is readable
+[0;32m✓[0m Config handles spaces in paths
+[0;32m✓[0m Config handles equals in value
+
+[1;33m========================================[0m
+[0;32mPassed: 24[0m
+[0;31mFailed: 0[0m
+[1;33mTotal:  24[0m
+[1;33m========================================[0m
+
+========================================
+Test Summary
+========================================
+Passed:  5
+Failed:  0
+Skipped: 0
+Total:   5
+========================================

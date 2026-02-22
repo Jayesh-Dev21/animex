@@ -1,0 +1,62 @@
+name: 'Run Tests'
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'animex'
+      - 'tests/**'
+      - '.github/workflows/tests.yml'
+
+jobs:
+  test:
+    name: Run Animex Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y fzf curl grep sed
+        
+    - name: Make animex executable
+      run: chmod +x ./animex
+      
+    - name: Run test suite
+      id: run_tests
+      run: |
+        cd tests
+        chmod +x *.sh
+        ./run-tests.sh > test_output.log 2>&1 || true
+        cat test_output.log
+        
+    - name: Update test results log
+      run: |
+        cd tests
+        echo "========================================" > test-results.txt
+        echo "Test Run: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> test-results.txt
+        echo "Commit: ${{ github.sha }}" >> test-results.txt
+        echo "Branch: ${{ github.ref_name }}" >> test-results.txt
+        echo "========================================" >> test-results.txt
+        echo "" >> test-results.txt
+        cat test_output.log >> test-results.txt
+        echo "" >> test-results.txt
+        echo "========================================" >> test-results.txt
+        
+    - name: Commit test results
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add tests/test-results.txt
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update test results [skip ci]"
+        
+    - name: Push test results
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
