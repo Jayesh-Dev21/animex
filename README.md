@@ -66,6 +66,9 @@ cd tests
 ./run-tests.sh
 ```
 
+Also has automated tests via Github-Actions, with every commit, and then the logs are stored with the commit hash --> 
+![](./images/tests.png)
+
 ## License
 
 GNU General Public License v3.0
